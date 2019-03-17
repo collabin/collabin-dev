@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/collabin/collabin-dev.svg?branch=master)](https://travis-ci.org/collabin/collabin-dev)
+
 # Package collabin
 
 This is a package for development purpose only. It'll be used to facilitate automation of post submission on Collabin in the future.
