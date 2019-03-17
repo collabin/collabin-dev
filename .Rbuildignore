@@ -1,0 +1,9 @@
+^\.travis\.yml$
+^LICENSE\.md$
+^pkgdown$
+^docs$
+^_pkgdown\.yml$
+^history\.RDS$
+^manual-test$
+^.*\.Rproj$
+^\.Rproj\.user$

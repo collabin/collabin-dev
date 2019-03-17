@@ -1,0 +1,18 @@
+Package: collabin
+Type: Package
+Title: Automating Post Submission on Collabin
+Version: 0.1.0
+Authors@R: person("Yongfu", "Liao", email = "liao961120@gmail.com", role = c("aut", "cre", "cph"))
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+URL: https://collabin-dev.netlify.com, https://github.com/collabin/collabin-dev
+BugReports: https://github.com/collabin/collabin-dev/issues
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    blogdown,
+    googlesheets,
+    yaml,
+    tools
+RoxygenNote: 6.1.1

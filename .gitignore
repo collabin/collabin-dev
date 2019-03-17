@@ -1,0 +1,7 @@
+docs/
+history.RDS
+manual-test/
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
