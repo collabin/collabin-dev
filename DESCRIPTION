@@ -14,5 +14,7 @@ Imports:
     blogdown,
     googlesheets,
     yaml,
-    tools
+    tools,
+    dplyr,
+    magrittr
 RoxygenNote: 6.1.1

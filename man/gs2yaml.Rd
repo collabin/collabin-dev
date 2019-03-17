@@ -9,3 +9,4 @@ gs2yaml(df, vars = NULL)
 \description{
 c('時間戳記', '文章標題', '文章附標題', '文章標籤 (逗點分隔，例如 "NLP", "Deep Learning", "R")')
 }
+\keyword{internal}

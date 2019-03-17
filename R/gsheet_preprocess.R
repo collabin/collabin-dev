@@ -1,4 +1,8 @@
-#' Read % Preprocess Response from Google Sheet
+#' Read & Preprocess Response from Google Sheet
+#'
+#' Read pulished Google sheet into data frame and preprocess
+#' the data frame according to the function passed in the
+#' argument.
 #'
 #' @param url URL to Google Sheet. The sheet needs to be published
 #'   through web for it to work without authentication.

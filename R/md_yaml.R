@@ -6,6 +6,9 @@
 #'   is passed, \code{yaml::read_yaml()} will be used to
 #'   read the file.
 #' @param md Path to the \code{.md} or \code{.Rmd} file.
+#' @param out Path to the output \code{.md} file. Defaults
+#'   to the path specified in \code{md}, which means
+#'   overwriting the input file.
 #'
 #' @export
 attach_yaml2md <- function(yaml, md, out = md) {
@@ -74,6 +77,7 @@ yaml4post <- function(author_id, gs_yaml,
 #' Convert 1 row of data frame into yaml structure
 #'
 #' c('時間戳記', '文章標題', '文章附標題', '文章標籤 (逗點分隔，例如 "NLP", "Deep Learning", "R")')
+#' @keywords internal
 gs2yaml <- function(df, vars = NULL) {
   stopifnot(nrow(df) == 1)
 
@@ -85,6 +89,7 @@ gs2yaml <- function(df, vars = NULL) {
 
 
 #' Rename yaml obj (a list) based on input lst.
+#' @keywords internal
 rename_yaml <- function(yaml, rename_lst = list(oldname = 'newname')) {
 
   new_name <- vector('character', length(yaml))
@@ -97,7 +102,8 @@ rename_yaml <- function(yaml, rename_lst = list(oldname = 'newname')) {
   return(yaml)
 }
 
-# Extract specific variables in a yml file into yaml obj
+#' Extract specific variables in a yml file into yaml obj
+#' @keywords internal
 extr_yml <- function(file = 'manual-test/author_info/joychiang.yml',
                       keys = c('author', 'mysite', 'comment', 'id')) {
   yml <- read_yaml(file)

@@ -2,10 +2,20 @@
 % Please edit documentation in R/gsheet_preprocess.R
 \name{read_gs}
 \alias{read_gs}
-\title{Read upload response from Google Sheet}
+\title{Read & Preprocess Response from Google Sheet}
 \usage{
-read_gs(url, clean_fun = collabin:::preprocess)
+read_gs(url, preprocess = collabin:::loper)
+}
+\arguments{
+\item{url}{URL to Google Sheet. The sheet needs to be published
+through web for it to work without authentication.}
+
+\item{preprocess}{Function. A function passed to preprocess
+the data frame returned by \code{googlesheets::gs_read()}.
+It takes \code{df} as input and returns a modified \code{df}.}
 }
 \description{
-"https://docs.google.com/spreadsheets/d/1LeDRR3iXflUDgDD5WdOjXJfLXCDtdBpetna_R6rXtH0/edit?usp=sharing"
+Read pulished Google sheet into data frame and preprocess
+the data frame according to the function passed in the
+argument.
 }

@@ -9,3 +9,4 @@ rename_yaml(yaml, rename_lst = list(oldname = "newname"))
 \description{
 Rename yaml obj (a list) based on input lst.
 }
+\keyword{internal}

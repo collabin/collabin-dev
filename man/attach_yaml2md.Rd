@@ -14,6 +14,10 @@ is passed, \code{yaml::read_yaml()} will be used to
 read the file.}
 
 \item{md}{Path to the \code{.md} or \code{.Rmd} file.}
+
+\item{out}{Path to the output \code{.md} file. Defaults
+to the path specified in \code{md}, which means
+overwriting the input file.}
 }
 \description{
 Attach yaml to md
