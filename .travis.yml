@@ -31,3 +31,4 @@ deploy:
     local-dir: docs    # Web output directory
     on:
       branch: master
+    target-branch: web
