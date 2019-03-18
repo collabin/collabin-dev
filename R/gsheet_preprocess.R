@@ -32,7 +32,7 @@ read_gs <- function(url, preprocess = collabin:::loper) {
 loper <- function(df) {
   processed_df <- df %>%
     rename(
-      slack = `Display name on Slack (e.g. \"shukai\")`,
+      id = `Display name on Slack (e.g. \"shukai\")`,
       date = `時間戳記`,
       title = `文章標題`,
       subtitle = `文章附標題`,
@@ -42,7 +42,7 @@ loper <- function(df) {
       zip_path = `文章上傳 (.zip 或將網址放在 \`url.txt\` 上傳)`,
       shorturl = `標題英文簡寫 (用於產生文章網址, 例如 \"write-in-rmd\")`
     ) %>%
-    mutate(slack = normalize(slack),
+    mutate(id = normalize(id),
            date = trimws((gsub('[上下]午.+$', '', date)))) %>%
     mutate(date = format(as.Date(date), "%Y-%m-%d")) %>%
     mutate(subtitle = dplyr::if_else(is.na(subtitle), "", subtitle),

@@ -5,13 +5,30 @@
 \title{Auto attach yaml header to md based on 1 input row of df}
 \usage{
 gsheet2post(df, post_dir_name = NULL,
+  lookup_id = collabin:::lookup_lope_id,
   author_yml_dir = "content/author_info/")
 }
 \arguments{
 \item{df}{A data frame with one row.}
 
-\item{author_yml_dir}{String. Path where yaml of author information
-are stored.}
+\item{post_dir_name}{String. The name of the directory of the
+target post. Defaults to \code{NULL}. In this case, the value
+of \code{post_dir_name} will be automatically extracted from
+the column \code{shorturl} of the first argument \code{df}.}
+
+\item{lookup_id}{A function. Defaults to
+\code{collabin:::lookup_lope_id}. This function will be used
+to map the variable \code{id} in \code{df} to the name of the
+directory of the author. The file
+\code{content/author_info/id.yml} defines this mapping
+relationship.
+The toppest level of the entries in \code{id.yml}
+corresponds to the \code{id} column in the passed-in \code{df}.
+The entries \code{id} under the toppest level entries are the
+mapped id returned by \code{collabin:::lookup_lope_id()}.}
+
+\item{author_yml_dir}{String. The path to the directories where
+\code{.yml}s of author information are stored.}
 }
 \description{
 Auto attach yaml header to md based on 1 input row of df
