@@ -39,13 +39,17 @@ attach_yaml2md <- function(yaml, md, out = md) {
     }
   }
 
+  # Add `isRmd: yes` if md is .Rmd file
+  if ((tools::file_ext(md) %in% c('Rmd', 'rmd')) &&
+      !('isRmd' %in% names(yaml))) {
+    yaml <- append(yaml, list(isRmd = TRUE))
+  }
+
   # Remove trailing `\n`
   yaml <- as.yaml(yaml)
   yaml <- substr(yaml, 1, nchar(yaml) - 1)
   yaml <- gsub("tags: '\\[", "tags: [", yaml)
   yaml <- gsub("]'\n", "]\n", yaml, fixed = TRUE)
-  #yaml <- gsub("tags: '[", "tags: [", yaml, fixed = TRUE)
-  #yaml <- gsub("]'", "]", yaml, fixed = TRUE)
 
   writeLines(c('---', yaml, '---', '', yaml_body$body), con = out)
 }
