@@ -14,7 +14,9 @@ gsheet2post <- function(df,  post_dir_name = NULL,
 
   author_id <- lookup_id(gs_yaml$slack)
 
-  stopifnot(file.exists(paste0(author_yml_dir, author_id, '.yml')))
+  if (!file.exists(paste0(author_yml_dir, author_id, '.yml'))) {
+    stop(author_yml_dir, author_id, '.yml', ' doesn\'t exist.')
+  }
 
   # Construct post yaml header
   post_yaml <- yaml4post(author_id,
@@ -23,8 +25,11 @@ gsheet2post <- function(df,  post_dir_name = NULL,
 
   # Move working dir to prepare for modifying md
   ori_dir <- getwd()
+
   if (is.null(post_dir_name) && is.na(gs_yaml$shorturl)) {
-    stop('No post dir provided')
+    stop('\nUnknown post directory of ', author_id, '.\n',
+         '`shorturl` of the post `', gs_yaml$title ,'` is NA.\n',
+         'Please pass the name of post dir to `post_dir_name`.')
   }
   post_dir_name <- ifelse(is.null(post_dir_name),
                      gs_yaml$shorturl,
