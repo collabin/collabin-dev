@@ -4,8 +4,7 @@
 \alias{yaml4post}
 \title{Combine Two Sources of yaml Together}
 \usage{
-yaml4post(author_id, gs_yaml,
-  author_yml_dir = "manual-test/author_info/")
+yaml4post(author_id, gs_yaml, author_yml_dir = "content/author_info/")
 }
 \arguments{
 \item{author_id}{String. The id of the author as specified in
