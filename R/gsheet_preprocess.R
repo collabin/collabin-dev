@@ -20,7 +20,7 @@
 #' }
 read_gs <- function(url, preprocess = collabin:::loper) {
   df <- gs_read(gs_url(url))
-  df <- clean_fun(df)
+  df <- preprocess(df)
   return(df)
 }
 
@@ -46,10 +46,11 @@ loper <- function(df) {
            date = trimws((gsub('[上下]午.+$', '', date)))) %>%
     mutate(date = format(as.Date(date), "%Y-%m-%d")) %>%
     mutate(subtitle = dplyr::if_else(is.na(subtitle), "", subtitle),
-           tags = dplyr::if_else(is.na(tags), "[lope]", tags)
+           tags = dplyr::if_else(is.na(tags), "[lope]",
+                                 paste0('[', tags, ']'))
            ) %>%
     mutate(tags = dplyr::if_else(grepl('(lope)|(LOPE)', tags),
-                                 tags, gsub(']$', ', LOPE]', tags)
+                                 tags, gsub('\\]$', ', LOPE]', tags)
                                  )
            )
 }

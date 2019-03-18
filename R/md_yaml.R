@@ -12,6 +12,7 @@
 #'
 #' @export
 attach_yaml2md <- function(yaml, md, out = md) {
+  if (!file.exists(md)) stop(md, ' doesn\'t exist.')
   stopifnot(is_md(md) || is_rmd(md))
 
   # Case where `yaml` is local file path
@@ -41,8 +42,10 @@ attach_yaml2md <- function(yaml, md, out = md) {
   # Remove trailing `\n`
   yaml <- as.yaml(yaml)
   yaml <- substr(yaml, 1, nchar(yaml) - 1)
-  yaml <- gsub("tags: '[", "tags: [", yaml, fixed = TRUE)
-  yaml <- gsub("]'", "]", yaml, fixed = TRUE)
+  yaml <- gsub("tags: '\\[", "tags: [", yaml)
+  yaml <- gsub("]'\n", "]\n", yaml, fixed = TRUE)
+  #yaml <- gsub("tags: '[", "tags: [", yaml, fixed = TRUE)
+  #yaml <- gsub("]'", "]", yaml, fixed = TRUE)
 
   writeLines(c('---', yaml, '---', '', yaml_body$body), con = out)
 }
@@ -64,7 +67,7 @@ attach_yaml2md <- function(yaml, md, out = md) {
 #'   It normalizes the respondent-provided id by 1) conversion to lower case
 #'   and 2) replace spaces with \code{_}.
 yaml4post <- function(author_id, gs_yaml,
-                      author_yml_dir = 'manual-test/author_info/') {
+                      author_yml_dir = 'content/author_info/') {
 
   author_yml_path <- paste0(author_yml_dir, author_id, '.yml')
   author_yaml <- extr_yml(author_yml_path, c('author', 'mysite', 'comment'))
