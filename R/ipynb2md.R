@@ -2,6 +2,7 @@
 #'
 #' Expected to work in dir where the source \code{.ipynb}
 #'   is available.
+#' @export
 ipynb2md <- function(ipynb = 'index.ipynb',
                      docker = 'jgoldfar/pandoc-nbconvert-docker') {
   stopifnot(file.exists(ipynb))
