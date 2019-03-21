@@ -24,19 +24,31 @@ unzip_rmd <- function(zipfile, postdir) {
   temp <- tempdir()
   extr_fps <- unzip(zipfile, exdir = temp)
 
-  extract_rmd(extr_fps, postdir)
+  # Extract `index.Rmd` to destination
+  success <- extract_rmd(extr_fps, postdir)
+
+  # Copy dependencies to destination
+  if (success) {
+    rmd_fps <- extr_fps[grepl('\\.[Rr]md$', extr_fps)]
+    html_fps <- extr_fps[grepl('\\.html$', extr_fps)]
+    rmd_dir <- dirname(rmd_fps[1])
+
+    file.remove(c(rmd_fps, html_fps))
+    file.copy(list.files(rmd_dir, full.names = TRUE), postdir,
+              recursive = TRUE)
+  }
 }
 
 extract_rmd <- function(extr_fps, postdir) {
   # Normal case: `index.Rmd`
   copied_fpath <- copy_file_inzip(extr_fps, file = 'index.Rmd', postdir)
-  if (!is.null(copied_fpath)) return(invisible())
+  if (!is.null(copied_fpath)) return(invisible(TRUE))
 
   # Non-standard file name: `index.rmd`
   copied_fpath <- copy_file_inzip(extr_fps, file = 'index.rmd', postdir)
   if (!is.null(copied_fpath)) {
     file.rename(copied_fpath, paste0(dirname(copied_fpath), '/index.Rmd'))
-    return(invisible())
+    return(invisible(TRUE))
   }
 
   # `index.rmd` or `index.Rmd` doesn't exist:
@@ -45,10 +57,11 @@ extract_rmd <- function(extr_fps, postdir) {
   if (!is.null(copied_fpath)) {
     cat2('`index.Rmd` not found, searching for unique `*.Rmd` instead.\n')
     file.rename(copied_fpath, paste0(dirname(copied_fpath), '/index.Rmd'))
-    return(invisible())
+    return(invisible(TRUE))
   }
+
   warning('No file copied')
-  return(copied_fpath)
+  return(FALSE)
 }
 
 extract_ipynb <- function(extr_fps, postdir) {
@@ -61,17 +74,17 @@ extract_ipynb <- function(extr_fps, postdir) {
   # Check if `index.ipynb` exist,
   # if it does, copy it to `postdir` & terminate function
   copied_fpath <- copy_file_inzip(extr_fps, file = 'index.ipynb', postdir)
-  if (!is.null(copied_fpath)) return(invisible())
+  if (!is.null(copied_fpath)) return(invisible(TRUE))
   # `index.ipynb` doesn't exist:
   #  Use unique `*.ipynb` if exist
   copied_fpath <- copy_file_inzip(extr_fps, '^[a-zA-Z0-9_-]+\\.ipynb$', postdir, grep = TRUE)
   if (!is.null(copied_fpath)) {
     cat2('`index.ipynb` not found, searching for unique `*.ipynb` instead.\n')
-    return(invisible())
+    return(invisible(TRUE))
   }
 
   warning('No file copied')
-  return(copied_fpath)
+  return(FALSE)
 }
 
 
