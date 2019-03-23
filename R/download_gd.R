@@ -19,10 +19,9 @@ download_gd <- function(url) {
   url <- paste0('"', url, '"')
 
   system2('curl', args = c('-L', '-o', temp, url))
-  file_type <- system2('file', 'curl_file', stdout = T)
+  file_type <- system2('file', temp, stdout = T)
 
   cat2('File downloaded to `', temp, '`')
-  cat2
   return(list(fpath = temp, isZip = grepl('Zip', file_type)))
 }
 
