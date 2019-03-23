@@ -54,7 +54,10 @@ gsheet2post <- function(df,  post_dir_name = NULL,
   # Attach constructed yaml header to md
   post_file <- ifelse(gs_yaml$format == '.Rmd',
                       '/index.Rmd', '/index.md')
-  attach_yaml2md(post_yaml, md = paste0(post_dir, post_file))
+  post_fpath <- paste0(post_dir, post_file)
+  # Deal with non-utf8 encodings
+  recode_as_utf8(post_fpath)
+  attach_yaml2md(post_yaml, md = post_fpath)
 }
 
 
