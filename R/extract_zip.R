@@ -53,7 +53,7 @@ extract_rmd <- function(extr_fps, postdir) {
 
   # `index.rmd` or `index.Rmd` doesn't exist:
      #  Use unique `*.Rmd` if exist
-  copied_fpath <- copy_file_inzip(extr_fps, '^[a-zA-Z0-9_-]+\\.[Rr]md$', postdir, grep = TRUE)
+  copied_fpath <- copy_file_inzip(extr_fps, '^[a-zA-Z0-9_ -]+\\.[Rr]md$', postdir, grep = TRUE)
   if (!is.null(copied_fpath)) {
     cat2('`index.Rmd` not found, searching for unique `*.Rmd` instead.\n')
     file.rename(copied_fpath, paste0(dirname(copied_fpath), '/index.Rmd'))
@@ -77,7 +77,7 @@ extract_ipynb <- function(extr_fps, postdir) {
   if (!is.null(copied_fpath)) return(invisible(TRUE))
   # `index.ipynb` doesn't exist:
   #  Use unique `*.ipynb` if exist
-  copied_fpath <- copy_file_inzip(extr_fps, '^[a-zA-Z0-9_-]+\\.ipynb$', postdir, grep = TRUE)
+  copied_fpath <- copy_file_inzip(extr_fps, '^[a-zA-Z0-9_ -]+\\.ipynb$', postdir, grep = TRUE)
   if (!is.null(copied_fpath)) {
     cat2('`index.ipynb` not found, searching for unique `*.ipynb` instead.\n')
     return(invisible(TRUE))
