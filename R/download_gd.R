@@ -25,6 +25,7 @@ download_gd <- function(url) {
   return(list(fpath = temp, isZip = grepl('Zip', file_type)))
 }
 
-
+# Alternative solution for downloading big files from GD
+# https://medium.com/@afun/downloading-big-file-form-google-drive-with-curl-7918bc3b2605
 
 

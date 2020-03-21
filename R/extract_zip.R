@@ -11,6 +11,7 @@ unzip_ipynb <- function(zipfile, postdir) {
 
   temp <- tempdir()
   extr_fps <- unzip(zipfile, exdir = temp)
+  copy_images(src_dir = dirname(extr_fps), dest_dir = postdir)
 
   extract_ipynb(extr_fps, postdir)
 }
@@ -23,6 +24,7 @@ unzip_rmd <- function(zipfile, postdir) {
 
   temp <- tempdir()
   extr_fps <- unzip(zipfile, exdir = temp)
+  copy_images(src_dir = dirname(extr_fps), dest_dir = postdir)
 
   # Extract `index.Rmd` to destination
   success <- extract_rmd(extr_fps, postdir)
@@ -53,7 +55,7 @@ extract_rmd <- function(extr_fps, postdir) {
 
   # `index.rmd` or `index.Rmd` doesn't exist:
      #  Use unique `*.Rmd` if exist
-  copied_fpath <- copy_file_inzip(extr_fps, '^[a-zA-Z0-9_ -]+\\.[Rr]md$', postdir, grep = TRUE)
+  copied_fpath <- copy_file_inzip(extr_fps, '.+\\.[Rr]md$', postdir, grep = TRUE)
   if (!is.null(copied_fpath)) {
     cat2('`index.Rmd` not found, searching for unique `*.Rmd` instead.\n')
     file.rename(copied_fpath, paste0(dirname(copied_fpath), '/index.Rmd'))
@@ -71,13 +73,14 @@ extract_ipynb <- function(extr_fps, postdir) {
     extr_fps <- extr_fps[!hidden_f_idx]
   }
 
+
   # Check if `index.ipynb` exist,
   # if it does, copy it to `postdir` & terminate function
   copied_fpath <- copy_file_inzip(extr_fps, file = 'index.ipynb', postdir)
   if (!is.null(copied_fpath)) return(invisible(TRUE))
   # `index.ipynb` doesn't exist:
   #  Use unique `*.ipynb` if exist
-  copied_fpath <- copy_file_inzip(extr_fps, '^[a-zA-Z0-9_ -]+\\.ipynb$', postdir, grep = TRUE)
+  copied_fpath <- copy_file_inzip(extr_fps, '.+\\.ipynb$', postdir, grep = TRUE)
   if (!is.null(copied_fpath)) {
     cat2('`index.ipynb` not found, searching for unique `*.ipynb` instead.\n')
     return(invisible(TRUE))
@@ -99,7 +102,11 @@ copy_file_inzip <- function(extr_fps, file = 'index.Rmd', postdir, grep = FALSE)
     return(dest)
   } else {
     if (length(extr_fps[indexfile_idx]) > 1) {
-      warning('More than one `', file, '` found')
+      warning('More than one `', file, '` found, use first one ',
+              extr_fps[indexfile_idx][1])
+      dest <- paste0(postdir, '/index.', file_ext(extr_fps[indexfile_idx][1]))
+      file.copy(extr_fps[indexfile_idx][1], to = dest)
+      return(dest)
     }
     if (length(extr_fps[indexfile_idx]) == 0) {
       warning('`', file, '` not found')
@@ -110,3 +117,10 @@ copy_file_inzip <- function(extr_fps, file = 'index.Rmd', postdir, grep = FALSE)
 
 file_ext <- function(...) tools::file_ext(...)
 cat2 <- function(...) cat(..., sep = '')
+
+
+copy_images <- function(src_dir, dest_dir) {
+  tgt <- list.files(src_dir[1], pattern = '\\.(png|jpg|jpeg|svg)$', full.names = T)
+  file.copy(from = tgt, to = dest_dir)
+}
+

@@ -4,8 +4,10 @@
 \alias{extr_yml}
 \title{Extract specific variables in a yml file into yaml obj}
 \usage{
-extr_yml(file = "manual-test/author_info/joychiang.yml",
-  keys = c("author", "mysite", "comment", "id"))
+extr_yml(
+  file = "manual-test/author_info/joychiang.yml",
+  keys = c("author", "mysite", "comment", "id")
+)
 }
 \description{
 Extract specific variables in a yml file into yaml obj

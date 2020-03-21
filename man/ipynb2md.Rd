@@ -4,8 +4,7 @@
 \alias{ipynb2md}
 \title{Convert Jupyter Notebook to Markdown}
 \usage{
-ipynb2md(ipynb = "index.ipynb",
-  docker = "jgoldfar/pandoc-nbconvert-docker")
+ipynb2md(ipynb = "index.ipynb", docker = "jgoldfar/pandoc-nbconvert-docker")
 }
 \description{
 Expected to work in dir where the source \code{.ipynb}

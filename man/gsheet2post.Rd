@@ -4,9 +4,12 @@
 \alias{gsheet2post}
 \title{Auto attach yaml header to md based on 1 input row of df}
 \usage{
-gsheet2post(df, post_dir_name = NULL,
+gsheet2post(
+  df,
+  post_dir_name = NULL,
   lookup_id = collabin:::lookup_lope_id,
-  author_yml_dir = "content/author_info/")
+  author_yml_dir = "content/author_info/"
+)
 }
 \arguments{
 \item{df}{A data frame with one row.}
