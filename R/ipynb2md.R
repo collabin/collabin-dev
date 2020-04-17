@@ -15,8 +15,13 @@ ipynb2md <- function(ipynb = 'index.ipynb',
 
   # Call docker to use nbconvert
   mount <- '`pwd`:/source'
-  system2('docker',
-          args = c('run', '--rm', '-v', mount, '--user', '$(id -u):$(id -g)', docker, 'nbconvert', ipynb, '--to', 'markdown'))
+  password <- readline("sudo psswd > ")
+  system(paste0('echo ', password, ' | sudo -S docker run --rm -v ',
+                mount, ' --user $(id -u):$(id -g) ',
+                docker, ' nbconvert ', ipynb, ' --to markdown')
+  )
+  #system2('sudo',
+  #        args = c('docker', 'run', '--rm', '-v', mount, '--user', '$(id -u):$(id -g)', docker, 'nbconvert', ipynb, '--to', 'markdown'))
 }
 
 # docker run --rm -v `pwd`:/source --user $(id -u):$(id -g) liao961120/pandoc-nbconvert nbconvert article.ipynb --to markdown

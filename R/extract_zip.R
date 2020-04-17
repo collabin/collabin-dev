@@ -105,7 +105,8 @@ copy_file_inzip <- function(extr_fps, file = 'index.Rmd', postdir, grep = FALSE)
       warning('More than one `', file, '` found, use first one ',
               extr_fps[indexfile_idx][1])
       dest <- paste0(postdir, '/index.', file_ext(extr_fps[indexfile_idx][1]))
-      file.copy(extr_fps[indexfile_idx][1], to = dest)
+      file.copy(extr_fps[indexfile_idx][1], to = dest)  # copy text file
+      file.copy(extr_fps[-indexfile_idx], to = dest)    # copy dependencies
       return(dest)
     }
     if (length(extr_fps[indexfile_idx]) == 0) {
